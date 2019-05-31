@@ -7,23 +7,24 @@
             <tr>
                <th>ID</th>
                <th>Username</th>
-               <th>Password</th>
+               <th>Actions</th>
             </tr>
          </thead>
 
          <tbody>
             {% for user in users %}
-               <tr>
+            {% if g.user['username']=='admin' %}
+                 <tr>
                    {% if not user.id==1 %}
                       <td>{{ user.id }}</td>
                       <td>{{ user.username }}</td>
-                      <td>{{ user.password }}</td>
-                       <td>
                         <td>{% if g.user['username'] == 'admin' %}
-                        <a href="{{ url_for('auth.deleteuser', id=user.id) }}" class="btn btn-primary">Delete</a>
-                        {% endif %}</td>
+                        <a href="{{ url_for('auth.deleteuser', id=user.id) }}" class="btn btn-primary">Delete</a>&nbsp;&nbsp;
+                        {% endif %}
+                       </td>
                     {% endif %}
                </tr>
+            {% endif %}
             {% endfor %}
          </tbody>
       </table>
