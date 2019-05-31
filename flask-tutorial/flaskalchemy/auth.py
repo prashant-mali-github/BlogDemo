@@ -13,12 +13,23 @@ def show():
     # db.session.commit()
     return render_template('show_user.html', users=users)
 
+@abp.route('/<int:id>/deleteuser')
+def deleteuser(id):
+    User.query.filter(User.id ==int(id)).delete()
+    db.session.query(Post).filter(Post.a_id == id).delete()
+    db.session.commit()
+    # posts = Post.query.filter_by(a_id=author.id).all()
+    # db.session.delete(author)
+    # db.session.delete(posts)
+    return redirect(url_for('auth.show'))
+
+
 
 @abp.route('/pagination')
 def pagination():
     blog = Post.query.order_by(desc(Post.pub_date)).all()
     print(len(blog),"...........")
-    return render_template('pagination.html', blog=blog, user=g.user)
+    return render_template('pagination.html', blog=blog)
 
 
 @abp.route('/register/', methods=['GET', 'POST'])

@@ -1,4 +1,84 @@
 
+div#myTopnav {
+    background-color: cornflowerblue;
+}
+div#myTopnav a:hover {
+  background-color: darkturquoise;
+}
+/*body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}*/
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.topnav .icon {
+  display: none;
+}
+
+@media screen and (max-width: 600px) {
+  .topnav a:not(:first-child) {display: none;}
+  .topnav a.icon {
+    float: right;
+    display: block;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .topnav.responsive {position: relative;}
+  .topnav.responsive .icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .topnav.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+}
+
+
+
+
+
+
+
+/*above navbar */
+nav.navbar.navbar-expand-lg.navbar-light.bg-light {
+    margin-top: 30px;
+  margin-bottom: 40px;
+  margin-right: 100px;
+  margin-left: 100px;
+  background-color: lightblue
+}
+
+.card-body {
+    background-color: ivory;
+}
 nav.navbar.navbar-expand-lg.navbar-light.bg-light {
     padding-block-start: inherit;
 }
@@ -15,11 +95,31 @@ p {
   font-weight: bold;
 }
 */
+/*body  {
+  background-image: url("1.png");
+  background-color: #cccccc;
+}
 
 
+*/
+th.sorting_asc {
+    background-color: lavender;
+}
+th.sorting {
+ background-color: lavender;
+}
 
+#editdemo {
+    float: right;
+}
 
+/*.form-group {
+    background-color: lavender;
+}*/
 
+input#pid {
+    float: left;
+}
 
 input[type="search"]
 {
@@ -32,7 +132,17 @@ input[type="search"]
     height: 40px;
     float: right;
 }
-
+.id_search
+{
+    padding: 10px;
+    font-size: 17px;
+    border: 1px solid grey;
+    float: left;
+    width: 20%;
+    background: #f1f1f1;
+    height: 40px;
+    float: right;
+}
 /* button css */
 a.paginate_button.current {
     background-color: #4CAF50;
@@ -63,12 +173,12 @@ a#myTable_next {
 }
 
 /*css for table heading*/
-th.sorting_asc {
+/*th.sorting_asc {
     background-color: aquamarine;
 }
 th.sorting {
     background-color: aquamarine;
-}
+}*/
 
 select {
     background: url(http://i62.tinypic.com/2e3ybe1.jpg) no-repeat right center;
