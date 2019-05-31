@@ -1,0 +1,53 @@
+{% extends 'base1.html' %}
+
+{% block header %}
+  <h1>{% block title %}Edit {{ post['title'] }}{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <form method="post" class="form-horizontal">
+     <div class="form-group">
+      <label class="control-label col-sm-2" for="title">Title:</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control"   value="{{ request.form['title'] or post['title'] }}" id="title" name="title" required>
+      </div>
+    </div>
+     <div class="form-group">
+      <label class="control-label col-sm-2" for="body">Body:</label>
+        <div class="col-sm-10">
+          <textarea name="body" id="body">{{ request.form['body'] or post['body'] }}</textarea>
+        </div>
+     </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+           <input type="submit" value="Save" onclick="myFunction" class="btn btn-primary"><br><br>
+      </div>
+    </div>
+  </form>
+    <hr>
+  <form action="{{ url_for('blog.delete', id=post['id']) }}" method="post" class="form-horizontal">
+  <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <input class="btn btn-primary" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+        <a href="/">Back to Home</a>
+      </div>
+  </div>
+  </form>
+</div>
+   <!--<form method="post">-->
+    <!--<label for="title">Title</label>-->
+    <!--<input name="title" id="title"-->
+      <!--value="{{ request.form['title'] or post['title'] }}" required>-->
+    <!--<label for="body">Body</label>-->
+    <!--<textarea name="body" id="body">{{ request.form['body'] or post['body'] }}</textarea>-->
+    <!--<input type="submit" value="Save">-->
+  <!--</form>-->
+  <!--<hr>-->
+  <!--<form action="{{ url_for('blog.delete', id=post['id']) }}" method="post">-->
+    <!--<input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');"><br>-->
+    <!--<a href="/">Back to Home</a>-->
+  <!--</form>-->
+{% endblock %}
+

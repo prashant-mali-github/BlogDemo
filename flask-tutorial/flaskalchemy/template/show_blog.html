@@ -1,0 +1,36 @@
+{% extends 'base1.html' %}
+{% block header %}
+<div class="container">
+  <h1>{% block title %}Blog Posts{% endblock %}</h1>
+  {% if g.user %}
+    <h2><a class="action" href="/add">New</a></h2>
+  {% endif %}
+</div>
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    {% for Post in blog %}
+      <div class="card">
+          <div>
+          <h2 class="card-header">{{ Post.title }}</h2>
+          </div>
+          <div class="card-body">
+	            <h5 class="card-title">by {{ Post.user.username}} on {{ Post['pub_date'].strftime('%Y-%m-%d')}}</h5>
+	              <hr>
+	             <h5><pre class="card-text">{{ Post.body }}</pre></h5>
+	              {% for c in c %}
+	               <div class="card-footer bg-transparent border-success">{{ Post.id }}</div>
+	              {% endfor %}
+	              {% if g.user['id'] == Post['a_id'] %}
+	              <hr>
+	                 <a href="{{ url_for('blog.update', id=Post.id) }}" class="btn btn-primary">Edit</a>
+	            {% endif %}
+          </div>
+      </div>
+		    {% if not loop.last %}
+		      <hr>
+		    {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}

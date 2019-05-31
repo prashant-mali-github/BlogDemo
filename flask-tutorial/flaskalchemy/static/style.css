@@ -1,0 +1,139 @@
+
+nav.navbar.navbar-expand-lg.navbar-light.bg-light {
+    padding-block-start: inherit;
+}
+/* pre css */
+/*
+
+pre { white-space: pre; }
+
+textarea {
+  height: 240px !important;
+}
+
+p {
+  font-weight: bold;
+}
+*/
+
+
+
+
+
+
+input[type="search"]
+{
+    padding: 10px;
+    font-size: 17px;
+    border: 1px solid grey;
+    float: left;
+    width: 80%;
+    background: #f1f1f1;
+    height: 40px;
+    float: right;
+}
+
+/* button css */
+a.paginate_button.current {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-size: 1.5vw;
+    background-color: #008CBA;
+    /* margin-top: 50px; */
+}
+
+/*css for table footer*/
+div#myTable_info {
+    font-size: 3vw;
+}
+
+a#myTable_previous {
+    font-size: 3vw;
+}
+a#myTable_next {
+    font-size: 3vw;
+}
+
+/*css for table heading*/
+th.sorting_asc {
+    background-color: aquamarine;
+}
+th.sorting {
+    background-color: aquamarine;
+}
+
+select {
+    background: url(http://i62.tinypic.com/2e3ybe1.jpg) no-repeat right center;
+    height: 34px;
+    width: 240px;
+}
+
+
+h1
+{
+    color:cornflowerblue;
+}
+.card-footer.bg-transparent.border-success {
+    height: 0.2px;
+}
+h2
+{
+    color:darkturquoise;
+}
+h5.card-title {
+    color: blueviolet;
+    background-color: floralwhit
+}
+.container-fluid {
+    background-color: azure;
+}
+textarea#body {
+    width: -webkit-fill-available;
+    resize: none;
+    height:150px;
+}
+.navbar-inverse .navbar-nav>li>a {
+    color: black;
+}
+.navbar-inverse .navbar-nav>li>a:hover{
+    color: blue
+}
+a.navbar-brand {
+    color: black;
+}
+a.navbar-brand{
+    color: blue;
+}
+h2.card-header {
+    background-color: gainsboro;
+}
+div#navbarNavDropdown {
+    background-color: darkseagreen;
+}
+/*.navbar-nav {
+      flex-direction: row;
+    }
+
+    .nav-link {
+      padding-right: .5rem !important;
+      padding-left: .5rem !important;
+    }
+
+    *//* Fixes dropdown menus placed on the right side *//*
+    *//*.ml-auto .dropdown-menu {
+      left: auto !important;
+      right: 0px;
+    }*//*
+div#navbarNavDropdown {
+    background-color: aliceblue;
+}
+*/
+

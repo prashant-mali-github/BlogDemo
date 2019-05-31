@@ -1,0 +1,46 @@
+{% extends 'base1.html' %}
+
+{% block header %}
+<div class="container">
+  <h1>{% block title %}New Post{% endblock %}</h1>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <form method="post" class="form-horizontal">
+     <div class="form-group">
+      <label class="control-label col-sm-2" for="category">Category:</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control"  value="{{ request.form['category'] }}" id="category" name="category" required>
+      </div>
+    </div>
+      <div class="form-group">
+      <label class="control-label col-sm-2" for="title">Title:</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control"  value="{{ request.form['title'] }}" id="title" name="title" required>
+      </div>
+    </div>
+     <div class="form-group">
+      <label class="control-label col-sm-2" for="body">Body:</label>
+        <div class="col-sm-10">
+            <p><pre><textarea name="body" id="body">{{ request.form['body'] }}</textarea></pre></p>
+        </div>
+     </div>
+   <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+           <input type="submit" value="Publish" onclick="myFunction" class="btn btn-primary">
+      </div>
+    </div><br><br><br>
+     <a href="/">Back to Home</a>
+  </form>
+</div>
+  <!--<form method="post">-->
+    <!--<label for="title">Title</label>-->
+    <!--<input name="title" id="title" value="{{ request.form['title'] }}" required>-->
+    <!--<label for="body">Body</label>-->
+    <!--<textarea name="body" id="body">{{ request.form['body'] }}</textarea>-->
+    <!--<input type="submit" value="Save" onclick="myFunction"><br>-->
+    <!--<a href="/">Back to Home</a>-->
+  <!--</form>-->
+{% endblock %}
