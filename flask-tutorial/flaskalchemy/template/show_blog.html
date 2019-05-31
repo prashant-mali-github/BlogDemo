@@ -1,11 +1,8 @@
 {% extends 'base1.html' %}
 {% block header %}
 <div class="container">
-  <h1 class="card-header">{% block title %}Blog Posts{% endblock %}</h1>
+    <h1 class="card-header">{% block title %}Blog Posts <span style="float:right">Total Posts:{{ c }}</span>{% endblock %}</h1>
   <br>
-
-
-
   <form method="post" action="{{ url_for('blog.go') }}"  class="form-horizontal">
      <div class="form-group">
       <label class="control-label col-sm-2" for="pid">Read Post by ID:</label>
