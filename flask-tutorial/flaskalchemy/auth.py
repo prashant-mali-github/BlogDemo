@@ -1,11 +1,13 @@
+from random import *  
 from flask import Blueprint,request, flash, url_for, redirect, render_template,g,current_app,session
 from flaskalchemy.db import User, db,Post
 from werkzeug.security import check_password_hash
+from . import Mail,Message,mail
 from sqlalchemy import desc
 import functools
 
 abp = Blueprint('auth', __name__, template_folder='template')
-
+otp = randint(000000,999999)  
 @abp.route('/show')
 def show():
     users = User.query.all()
@@ -23,7 +25,20 @@ def deleteuser(id):
     # db.session.delete(posts)
     return redirect(url_for('auth.show'))
 
+@abp.route('/<username>/verify')
+def otplogin(username):
+    email = username  
+    msg = Message('OTP',sender = 'prashantmali.info@gmail.com', recipients = [email])  
+    msg.body = str(otp)  
+    mail.send(msg)    
+    return render_template('loginotp.html')
 
+@abp.route('/validate',methods=["POST"])  
+def validate():  
+    user_otp = request.form['otp']  
+    if otp == int(user_otp):  
+        return redirect(url_for('blog.showblog')) 
+    return "<h3>failure</h3>" 
 
 @abp.route('/pagination')
 def pagination():
@@ -46,6 +61,10 @@ def register():
                 register = User(username=username, password=password)
                 db.session.add(register)
                 db.session.commit()
+                msg = Message('OTP',sender = 'prashantmali.info@gmail.com', recipients = [register.username])  
+                msg.body = f'username:{register.username} and password:{password}' 
+                mail.send(msg)    
+                print("send",".............")
             else:
                 error="Username already exist"
                 flash(error)
@@ -56,6 +75,8 @@ def register():
             error="Password and confirm password not match"
             flash(error)
     return render_template("auth/add.html")
+
+    
 
 
 @abp.route("/login", methods=["GET", "POST"])
@@ -69,7 +90,9 @@ def login():
         if user and check_password_hash(user.password,passw):
             session.clear()
             session['user_id'] = user.id
-            return redirect(url_for('blog.showblog'))
+            if user.username=='admin':
+                return redirect(url_for('blog.showblog'))
+            return redirect(url_for('auth.otplogin',username=user.username))
         else:
             error = "Please enter valid credential"
             flash(error)
@@ -78,7 +101,6 @@ def login():
 @abp.before_app_request
 def load_logged_in_user():
     user_id = session.get('user_id')
-
     if user_id is None:
         g.user = None
     else:
