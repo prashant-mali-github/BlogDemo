@@ -15,7 +15,7 @@
             {% for user in users %}
             {% if g.user['username']=='admin' %}
                  <tr>
-                   {% if not user.id==1 %}
+                   {% if not user.username=='admin' %}
                       <td>{{ user.id }}</td>
                       <td>{{ user.username }}</td>
                         <td>{% if g.user['username'] == 'admin' %}

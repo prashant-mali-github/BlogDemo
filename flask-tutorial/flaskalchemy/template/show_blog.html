@@ -21,7 +21,7 @@
     </div> -->
   </form>
   {% if g.user %}
-    <h2><a class="action" href="/add">New</a></h2>
+    <h2><a class="action" href="/add">New</a><span> <a href="{{ url_for('auth.remove_self',id=g.user['id']) }}" style="float:right">Remove Account:</a></span></h2>
     <hr>
   {% endif %}
 </div>

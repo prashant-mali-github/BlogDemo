@@ -20,6 +20,10 @@ def add():
             blog = Post(request.form['category'],request.form['title'],request.form['body'], g.user.id)
             db.session.add(blog)
             db.session.commit()
+            # msg = Message(str(blog.title),sender = 'prashantmali.info@gmail.com', recipients = [blog.user.username])  
+            # msg.body = str(blog.body)
+            # mail.send(msg)    
+            print("send",".............")
             return redirect(url_for('blog.index'))
 
     return render_template('blog/create.html')
@@ -105,6 +109,9 @@ def update(id):
             post.body=body
             db.session.add(post)
             db.session.commit()
+            # msg = Message(str(post.title),sender = 'prashantmali.info@gmail.com', recipients = [post.user.username])  
+            # msg.body = "Updated:"+"Title=>"+str(post.title)+"\n"+"Body=>"+ str(post.body) 
+            # mail.send(msg)    
             return redirect(url_for('blog.index'))
 
     return render_template('blog/update.html', post=post)
