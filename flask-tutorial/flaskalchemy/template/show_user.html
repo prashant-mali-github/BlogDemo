@@ -7,22 +7,29 @@
             <tr>
                <th>ID</th>
                <th>Username</th>
+               <th>Total Posts</th>
                <th>Actions</th>
             </tr>
          </thead>
 
          <tbody>
-            {% for user in users %}
+            {% for user in users%}
             {% if g.user['username']=='admin' %}
                  <tr>
-                   {% if not user.username=='admin' %}
-                      <td>{{ user.id }}</td>
-                      <td>{{ user.username }}</td>
+                    {% if not user.username=='admin' %}
+                      {% for dict_item in parent_dict %}
+                         {% for key, value in dict_item.items() %}
+                            {% if user.username==key %}
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.username }}</td>
+                            <td>{{value}}</td>
+                            {% endif %}
+                         {% endfor %}
+                      {% endfor %}
                         <td>{% if g.user['username'] == 'admin' %}
-                        <a href="{{ url_for('auth.deleteuser', id=user.id) }}" class="btn btn-primary">Delete</a>&nbsp;&nbsp;
+                        <a href="{{ url_for('auth.deleteuser', id=user.id) }}" class="btn btn-primary">Delete</a>&nbsp;&nbsp;</td>
                         {% endif %}
-                       </td>
-                    {% endif %}
+                      {% endif %}  
                </tr>
             {% endif %}
             {% endfor %}

@@ -25,6 +25,8 @@ def add():
             # mail.send(msg)    
             print("send",".............")
             return redirect(url_for('blog.index'))
+            if True:
+                return redirect_back(url_for('blog.showblog'))
 
     return render_template('blog/create.html')
 

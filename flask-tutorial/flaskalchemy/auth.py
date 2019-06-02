@@ -5,6 +5,27 @@ from werkzeug.security import check_password_hash,generate_password_hash
 from . import Mail,Message,mail
 from sqlalchemy import desc
 import functools
+# from urllib.parse import urljoin,urlparse
+# from flask import request, url_for
+
+# def is_safe_url(target):
+#     ref_url = urlparse(request.host_url)
+#     test_url = urlparse(urljoin(request.host_url, target))
+#     return test_url.scheme in ('http', 'https') and \
+#            ref_url.netloc == test_url.netloc
+
+# def get_redirect_target():
+#     for target in request.values.get('next'), request.referrer:
+#         if not target:
+#             continue
+#         if is_safe_url(target):
+#             return target
+# def redirect_back(endpoint, **values):
+#     target = request.form['next']
+#     if not target or not is_safe_url(target):
+#         target = url_for(endpoint, **values)
+#     return redirect(url_for('auth.index'))
+
 
 abp = Blueprint('auth', __name__, template_folder='template')
 otp = randint(000000,999999)  
@@ -66,7 +87,7 @@ def validateusername():
         error=None
         user_name=request.form['username']
         user=User.query.filter_by(username=user_name).first()
-        msg = Message('OTP',sender = 'prashantmali.info@gmail.com', recipients = [user.username])  
+        msg = Message('changepassword link',sender = 'prashantmali.info@gmail.com', recipients = [user.username])  
         msg.body = f"http://localhost:5000/{user.username}/resetview" 
         mail.send(msg) 
         webbrowser.open_new(a_website)
@@ -97,9 +118,27 @@ def resetview(username):
 @abp.route('/show')
 def show():
     users = User.query.all()
-    # db.session.query(User).delete()
+    l=[]
+    s={}
+    for user in users:
+        d={}
+        posts=Post.query.filter_by(a_id=user.id).all()
+        #print(user.username,"=>",len(posts))
+        d[user.username]=len(posts)
+        for key,value in d.items():
+            print("key=>",key,"values=>",value)
+        l.append(d)
+    s["users"]=l
+    print(l)
+    # for d in l:
+    #     print(d)
+    #print(s["users"][0][])
+
+    #     for post in posts:
+    #         print(post)
+    # # db.session.query(User).delete()
     # db.session.commit()
-    return render_template('show_user.html', users=users)
+    return render_template('show_user.html', users=users,parent_dict=l)
 
 @abp.route('/<int:id>/deleteuser')
 def deleteuser(id):
@@ -148,16 +187,19 @@ def register():
                 register = User(username=username, password=password)
                 db.session.add(register)
                 db.session.commit()
-                msg = Message('OTP',sender = 'prashantmali.info@gmail.com', recipients = [register.username])  
-                msg.body = f'username:{register.username} and password:{password}' 
-                mail.send(msg)    
-                print("send",".............")
+                if False:
+                    msg = Message('OTP',sender = 'prashantmali.info@gmail.com', recipients = [register.username])  
+                    msg.body = f'username:{register.username} and password:{password}' 
+                    mail.send(msg)    
+                    print("send",".............")
             else:
                 error="Username already exist"
                 flash(error)
                 # error=""
                 # flash(error)
             return redirect(url_for("auth.login"))
+            # if True:
+            #     return redirect_back(url_for('blog.showblog'))
         else:
             error="Password and confirm password not match"
             flash(error)
@@ -177,10 +219,11 @@ def login():
         if user and check_password_hash(user.password,passw):
             session.clear()
             session['user_id'] = user.id
-            if user.username=='admin':
-                return redirect(url_for('blog.showblog'))
-            else:    
-                return redirect(url_for('auth.otplogin',username=user.username))
+            return redirect(url_for('blog.showblog'))
+            # if user.username=='admin':
+            #     return redirect(url_for('blog.showblog'))
+            # elif False:   
+            #     return redirect(url_for('auth.otplogin',username=user.username))
         else:
             error = "Please enter valid credential"
             flash(error)
@@ -194,6 +237,10 @@ def load_logged_in_user():
     else:
         g.user = User.query.filter_by(id=user_id).first()
 
+# @abp.after_request
+# def after_request(response):
+#     response.headers.add('Cache-Control', 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0')
+#     return response
 
 @abp.route('/logout')
 def logout():
