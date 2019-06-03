@@ -22,6 +22,16 @@ $(document).ready(function(){
     $('#myTable').dataTable();
 });
 </script>
+
+<SCRIPT type="text/javascript">
+	window.history.forward();
+	function noBack()
+	{
+	 window.history.forward();
+	 }
+</SCRIPT>
+</HEAD>
+
 <script>
 var $star_rating = $('.star-rating .fa');
 
@@ -56,14 +66,15 @@ function myFunction() {
 <!--&lt;!&ndash;script for navbar&ndash;&gt;-->
 </script>
 </head>
-<body>
-<div class="container">
-<div class="topnav" id="myTopnav">
-  <a  href="{{ url_for('auth.login') }}">Home
+<BODY onload="noBack();"
+	onpageshow="if (event.persisted) noBack();" onunload="">
+<div class="container" id="menu">
+  <div class="topnav" id="myTopnav">
+  <a  href="#">Home
   <a  href="{{ url_for('auth.show') }}">View Authors</a>
   <a  href="{{ url_for('blog.showblog') }}">View Posts</a>
   <a href="{{ url_for('auth.pagination') }}">Search Posts</a>
-  {% if g.user %}
+  {% if g.user  %}
           <a href="{{ url_for('auth.logout') }}" style="float:right">LogOut</a>
           <a style="float:right"><b>{{ g.user.username }}</b></a>
           {% else %}
@@ -74,7 +85,7 @@ function myFunction() {
   <a href="javascript:void(0);" class="icon" onclick="myFunction()">
     <i class="fa fa-bars"></i>
   </a>
-</div>
+  </div>
 </div>
 
 <!--<nav class="navbar navbar-expand-lg navbar-light bg-light">-->

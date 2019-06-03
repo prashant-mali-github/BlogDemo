@@ -5,26 +5,6 @@ from werkzeug.security import check_password_hash,generate_password_hash
 from . import Mail,Message,mail
 from sqlalchemy import desc
 import functools
-# from urllib.parse import urljoin,urlparse
-# from flask import request, url_for
-
-# def is_safe_url(target):
-#     ref_url = urlparse(request.host_url)
-#     test_url = urlparse(urljoin(request.host_url, target))
-#     return test_url.scheme in ('http', 'https') and \
-#            ref_url.netloc == test_url.netloc
-
-# def get_redirect_target():
-#     for target in request.values.get('next'), request.referrer:
-#         if not target:
-#             continue
-#         if is_safe_url(target):
-#             return target
-# def redirect_back(endpoint, **values):
-#     target = request.form['next']
-#     if not target or not is_safe_url(target):
-#         target = url_for(endpoint, **values)
-#     return redirect(url_for('auth.index'))
 
 
 abp = Blueprint('auth', __name__, template_folder='template')
@@ -42,38 +22,6 @@ def remove_self(id):
     return redirect(url_for('auth.login'))
 
 
-# @abp.route('/changepassword')
-# def changepassword():
-#     return render_template('changepassword.html')
-
-
-# @abp.route('/validate_email', methods=['GET', 'POST'])
-# def validate_email():
-#     if request.method == "POST":
-#         error=None
-#         user_name=request.form['username']
-#         user=User.query.filter_by(username=user_name).first()
-#         return redirect(url_for('auth.otploginemail',username=user.username))
-#     return render_template('changepassword.html')
-
-# @abp.route('/<username>/verify')
-# def otploginemail(username):
-#     if request.method=="POST":
-#         print(username,"......................")
-#         email = username  
-#         msg = Message('OTP',sender = 'prashantmali.info@gmail.com', recipients = [email])  
-#         msg.body = str(otp)  
-#         l=mail.send(msg)    
-#     return render_template('loginotpemail.html',username=username)
-
-# @abp.route('/<user_name>/validate_password',methods=["POST"])  
-# def validate_password(user_name):  
-#     user_otp = request.form['otp']  
-#     if otp == int(user_otp):  
-#         return redirect(url_for('auth.resetview',username=user_name))
-#     return "<h3>failure</h3>" 
-
-# open a connection to a URL using urllib
 
 import webbrowser
 
@@ -125,11 +73,11 @@ def show():
         posts=Post.query.filter_by(a_id=user.id).all()
         #print(user.username,"=>",len(posts))
         d[user.username]=len(posts)
-        for key,value in d.items():
-            print("key=>",key,"values=>",value)
+        # for key,value in d.items():
+        #     print("key=>",key,"values=>",value)
         l.append(d)
     s["users"]=l
-    print(l)
+    #print(l)
     # for d in l:
     #     print(d)
     #print(s["users"][0][])
@@ -160,11 +108,11 @@ def otplogin(username):
 
 @abp.route('/validate',methods=["POST"])  
 def validate():  
-    user_otp = request.form['otp']  
-    if otp == int(user_otp):  
+    user_otp = request.form['otp']
+    if otp == int(user_otp):
         return redirect(url_for('blog.showblog')) 
     else:    
-        return "<h3>failure</h3>" 
+        return "<h3>failure</h3>"
 
 @abp.route('/pagination')
 def pagination():
@@ -188,9 +136,9 @@ def register():
                 db.session.add(register)
                 db.session.commit()
                 if False:
-                    msg = Message('OTP',sender = 'prashantmali.info@gmail.com', recipients = [register.username])  
-                    msg.body = f'username:{register.username} and password:{password}' 
-                    mail.send(msg)    
+                    msg = Message('OTP',sender = 'prashantmali.info@gmail.com', recipients = [register.username])
+                    msg.body = f'username:{register.username} and password:{password}'
+                    mail.send(msg)
                     print("send",".............")
             else:
                 error="Username already exist"
@@ -219,11 +167,10 @@ def login():
         if user and check_password_hash(user.password,passw):
             session.clear()
             session['user_id'] = user.id
-            return redirect(url_for('blog.showblog'))
-            # if user.username=='admin':
-            #     return redirect(url_for('blog.showblog'))
-            # elif False:   
-            #     return redirect(url_for('auth.otplogin',username=user.username))
+            if user.username=='admin':
+                return redirect(url_for('blog.showblog'))
+            else:
+                return redirect(url_for('auth.otplogin',username=user.username))
         else:
             error = "Please enter valid credential"
             flash(error)
@@ -237,10 +184,6 @@ def load_logged_in_user():
     else:
         g.user = User.query.filter_by(id=user_id).first()
 
-# @abp.after_request
-# def after_request(response):
-#     response.headers.add('Cache-Control', 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0')
-#     return response
 
 @abp.route('/logout')
 def logout():

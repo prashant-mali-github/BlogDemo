@@ -6,21 +6,21 @@
 <table class="table table-hover" id="myTable">
           <thead>
           <tr>
-            <th><h2>ID</h2></th>
             <th><h2>Title</h2></th>
             <th><h2>Category</h2></th>
             <th><h2>Author</h2></th>
             <th><h2>Date</h2></th>
+            <th><h2>Read</h2></th>
           </tr>
         </thead>
         <tbody>
         {% for Post in blog %}
                   <tr>
-                    <td><h2 class="card-header">{{ Post.id }}</h2></td>
                     <td><h2 class="card-header">{{ Post.title }}</h2></td>
                     <td><h5><p class="card-text">{{ Post.category }}</p></h5></td>
                     <td><h5 class="card-title">by {{ Post.user.username}}</h5></td>
                     <td><h5 class="card-title">{{ Post.pub_date.strftime('%Y-%m-%d')}}</h5></td>
+                    <td><a class="btn btn-primary" href="{{ url_for('blog.read',id=Post.id) }}">View</a></td>
                   </tr>
          {% endfor %}
      </tbody>

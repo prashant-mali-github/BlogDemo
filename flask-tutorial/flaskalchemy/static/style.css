@@ -1,7 +1,10 @@
-
 div#myTopnav {
     background-color: cornflowerblue;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-top:20px;
 }
+
 div#myTopnav a:hover {
   background-color: darkturquoise;
 }
@@ -123,14 +126,14 @@ input#pid {
 
 input[type="search"]
 {
-    padding: 10px;
-    font-size: 17px;
-    border: 1px solid grey;
-    float: left;
-    width: 80%;
-    background: #f1f1f1;
-    height: 40px;
-    float: right;
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
 }
 .id_search
 {
@@ -184,6 +187,8 @@ select {
     background: url(http://i62.tinypic.com/2e3ybe1.jpg) no-repeat right center;
     height: 34px;
     width: 240px;
+    float: right;
+    margin-left: 10px;
 }
 
 

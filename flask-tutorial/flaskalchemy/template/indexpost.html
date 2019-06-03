@@ -3,22 +3,21 @@
 <div class="container">
   <h1 class="card-header">{% block title %}Blog Posts{% endblock %}</h1>
   <br>
-
- <!--  <form method="post" action="{{ url_for('blog.go') }}"  class="form-horizontal">
-     <div class="form-group">
-      <label class="control-label col-sm-2" for="pid">View Post:</label>
-      <div class="col-sm-10">
-        <input type="text" class="form-control" id="pid" placeholder="Enter post id" name="pid" required>
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10">
-        <button type="submit" class="btn btn-primary">Go</button>
-      </div>
-    </div>
-  </form> -->
+   <!--<form method="post" action="{{ url_for('blog.go') }}"  class="form-horizontal">-->
+     <!--<div class="form-group">-->
+      <!--<label class="control-label col-sm-2" for="pid">View Post:</label>-->
+      <!--<div class="col-sm-10">-->
+        <!--<input type="text" class="form-control" id="pid" placeholder="Enter post id" name="pid" required>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div class="form-group">-->
+      <!--<div class="col-sm-offset-2 col-sm-10">-->
+        <!--<button type="submit" class="btn btn-primary">Go</button>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</form>-->
 {% if g.user %}
-    <h2><a class="action" href="/add">New</a></h2>
+    <h2><a class="btn btn-primary" style="margin-top:-20px;margin-left:20px;" href="/add">New</a></h2>
     <hr>
   {% endif %}
 </div>
@@ -28,20 +27,54 @@
   <div class="container">
       <div class="card">
           <div>
-          <h2 class="card-header">{{ Post.title }}</h2>
+          <h2 class="card-header">{{ Post.title }}<span style="float:right;margin-top: -5px;"> {% if g.user['id'] == Post['a_id'] %}
+                 <a href="{{ url_for('blog.update', id=Post.id) }}" class="btn btn-primary">Edit</a>
+            {% endif %}</span></h2>
           </div>
           <div class="card-body">
             <h5 class="card-title">Id:{{Post.id }} by {{ Post.user.username}} on {{ Post['pub_date'].strftime('%Y-%m-%d')}}</h5>
               <hr>
              <h5><pre class="card-text">{{ Post.body }}</pre></h5>
-              
+
                <div class="card-footer bg-transparent border-success">{{ Post.category }}</div>
-            {% if g.user['id'] == Post['a_id'] %}
-              <hr>
-                 <a href="{{ url_for('blog.update', id=Post.id) }}" class="btn btn-primary">Edit</a>
-            {% endif %}
           </div>
       </div>
-    
 </div>
+<!--<div class="container">-->
+  <!--<h2>Large Modal</h2>-->
+  <!--&lt;!&ndash; Button to Open the Modal &ndash;&gt;-->
+  <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">-->
+    <!--Open modal-->
+  <!--</button>-->
+  <!--&lt;!&ndash; The Modal &ndash;&gt;-->
+  <!--<div class="modal fade" id="myModal">-->
+    <!--<div class="modal-dialog modal-lg">-->
+      <!--<div class="modal-content">-->
+
+        <!--&lt;!&ndash; Modal Header &ndash;&gt;-->
+        <!--<div class="modal-header">-->
+          <!--<h4 class="modal-title card-header">{{ Post.title }}</h4>-->
+          <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
+        <!--</div>-->
+
+        <!--&lt;!&ndash; Modal body &ndash;&gt;-->
+        <!--<div class="modal-body">-->
+         <!--<h5 class="card-title">Id:{{Post.id }} by {{ Post.user.username}} on {{ Post['pub_date'].strftime('%Y-%m-%d')}}<span style="float:right;margin-top: -10px"> {% if g.user['id'] == Post['a_id'] %}-->
+                 <!--<a href="{{ url_for('blog.update', id=Post.id) }}" class="btn btn-primary">Edit</a>-->
+              <!--{% endif %} </span></h5>-->
+              <!--<hr>-->
+             <!--<h5><pre class="card-text">{{ Post.body }}</pre></h5>-->
+        <!--</div>-->
+
+        <!--&lt;!&ndash; Modal footer &ndash;&gt;-->
+        <!--<div class="modal-footer">-->
+            <!--<div class="card-footer" style="background-color: paleturquoise;">{{ Post.category }}</div>-->
+          <!--&lt;!&ndash;<div><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>&ndash;&gt;-->
+        <!--</div>-->
+
+    <!--</div>-->
+  <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
+
 {% endblock %}

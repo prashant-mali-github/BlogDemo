@@ -8,25 +8,49 @@ bg = Blueprint('blog', __name__,template_folder='template')
 
 @bg.route('/')
 def index():
+    """ view for show blog"""
     return redirect(url_for("blog.showblog"))
+
+@bg.route('/<int:id>/read')
+def read(id):
+    error = None
+    """ go() view for read post by id"""
+    try:
+        post = Post.query.filter_by(id=int(id)).first()
+        return render_template('indexpost.html', Post=post)
+    except Exception as e:
+        print("If id not entered please enter id...........")
+
+
+
 
 @bg.route('/add',methods=['GET','POST'])
 def add():
+    error=None
+    """" add() view use for create new blog and publish it."""
     if request.method == 'POST':
-        if not request.form['category'] or not request.form['title'] or not request.form['body']:
-            flash('Please enter all the fields', 'error')
-        else:
-            # for i in range(50):
-            blog = Post(request.form['category'],request.form['title'],request.form['body'], g.user.id)
-            db.session.add(blog)
-            db.session.commit()
-            # msg = Message(str(blog.title),sender = 'prashantmali.info@gmail.com', recipients = [blog.user.username])  
-            # msg.body = str(blog.body)
-            # mail.send(msg)    
-            print("send",".............")
-            return redirect(url_for('blog.index'))
-            if True:
-                return redirect_back(url_for('blog.showblog'))
+        category=request.form['category']
+        title=request.form['title']
+        body=request.form['body']
+
+        try:
+            if not category or not title or not body :
+                error='Please enter all the fields'
+                flash(error)
+            else:
+                # for i in range(50):
+                blog = Post(category,title,body, g.user.id)
+                db.session.add(blog)
+                db.session.commit()
+                # msg = Message(str(blog.title),sender = 'prashantmali.info@gmail.com', recipients = [blog.user.username])
+                # msg.body = str(blog.body)
+                # mail.send(msg)
+                print("send",".............")
+                return redirect(url_for('blog.index'))
+        except DatabaseError as de:
+            print(de,"............database error")
+        except Exception as e:
+            print(e)
 
     return render_template('blog/create.html')
 
@@ -42,36 +66,35 @@ def load_logged_in_user():
 
 @bg.route('/showblog')
 def showblog():
-    # blog = db.engine.execute(
-    #     'SELECT p.id, title, body, pub_date, a_id, username'
-    #     ' FROM post p JOIN user u ON p.a_id= u.id'
-    #     ' ORDER BY pub_date DESC'
-    # ).fetchall()
-
-    # username=User.query.get(user.id)
-    # print(username.name,",,,,,,")
-    # db.session.query(Post).delete()
-    # db.session.commit()
-    blog=Post.query.order_by(desc(Post.pub_date)).all()
-    c=len(blog)
-    return render_template('show_blog.html', blog=blog,user=g.user,c=str(c))
+    """ showblog() view write for display all post to user"""
+    try:
+        blog=Post.query.order_by(desc(Post.pub_date)).all()
+        c = len(blog)
+        return render_template('show_blog.html', blog=blog, user=g.user, c=str(c))
+    except Exception as e:
+        print("database not found")
 
 
 @bg.route('/go',methods=('GET','POST'))
 def go():
+    error = None
+    """ go() view for read post by id"""
     if request.method == 'POST':
-        id = request.form['pid']
-        error = None
-
-        if not id:
-            error = 'Title is required.'
-            flash(error)
-        if error is not None:
-            flash(error)
+        try:
+            id = request.form['pid']
+            if not id:
+                error = 'Title is required.'
+                flash(error)
+            if error is not None:
+                flash(error)
+        except AttributeError as e:
+            print("If id not entered please enter id...........")
+        # except Exception as e:
+        #     print("...........")
         else:
             post = Post.query.filter_by(id=id).first()
             print("...............",post.id,post.category)
-        return render_template('indexpost.html',Post=post)
+            return render_template('indexpost.html',Post=post)
 
     
 
