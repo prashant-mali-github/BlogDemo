@@ -97,19 +97,27 @@ def deleteuser(id):
     # db.session.delete(author)
     # db.session.delete(posts)
     return redirect(url_for('auth.show'))
-
+# v=x
+# print(totp.verify(v`))
+# time.sleep(30)
+import time
+import pyotp
+totp = pyotp.TOTP("JBSWY3DPEHPK3PXP")
+x = totp.now()
 @abp.route('/<username>/verify')
 def otplogin(username):
+
+    print("Current OTP:", x)
     email = username  
     msg = Message('OTP',sender = 'prashantmali.info@gmail.com', recipients = [email])  
-    msg.body = str(otp)  
+    msg.body = x
     mail.send(msg)    
     return render_template('loginotp.html')
 
 @abp.route('/validate',methods=["POST"])  
-def validate():  
+def validate():
     user_otp = request.form['otp']
-    if otp == int(user_otp):
+    if user_otp==x:
         return redirect(url_for('blog.showblog')) 
     else:    
         return "<h3>failure</h3>"
