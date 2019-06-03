@@ -116,11 +116,14 @@ def otplogin(username):
 
 @abp.route('/validate',methods=["POST"])  
 def validate():
+    error=None
     user_otp = request.form['otp']
     if user_otp==x:
         return redirect(url_for('blog.showblog')) 
     else:    
-        return "<h3>failure</h3>"
+        error="Please Enter valid OTP"
+        flash(error)
+        return redirect(url_for('auth.validate')) 
 
 @abp.route('/pagination')
 def pagination():
